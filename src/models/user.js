@@ -21,9 +21,9 @@ const User = sequelize.define("User", {
 (async () => {
   try {
     await sequelize.sync({ force: false, alter: true }); // force: false para não apagar dados existentes, alter: true para sincronizar mudanças nos modelos
-    console.log("Tabela 'User' verificada/criada com sucesso!");
+    console.log("Table 'User' verified/created successfully.");
   } catch (error) {
-    console.error("Erro ao verificar ou criar a tabela 'User':", error);
+    console.error("Error checking or creating table 'User':", error);
   }
 })();
 
