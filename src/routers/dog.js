@@ -1,7 +1,7 @@
 const express = require("express");
-const ControllerPeople = require("../controllers/dog");
+const ControllerDog = require("../controllers/dog");
 const router = express.Router();
-const controller = new ControllerPeople();
+const controller = new ControllerDog();
 router.get("/api/v1/names", controller.getAll);
 router.get("/api/v1/name/:id", controller.getOne);
 router.post("/api/v1/name", controller.add);

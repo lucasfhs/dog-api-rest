@@ -1,4 +1,4 @@
-const RepositoryDog = require("../repository/dog");
+const RepositoryDog = require("../repositories/dog");
 const repository = new RepositoryDog();
 class ServiceDog {
   getAll() {

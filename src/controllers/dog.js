@@ -27,6 +27,7 @@ class ControllerDog {
   add(req, res) {
     try {
       const body = req.body;
+      service.add(body.name);
       res.status(201).json({ message: "Process completed successfully." });
     } catch (error) {
       res.status(500).json({ error: error.message });
