@@ -1,30 +1,31 @@
-const bankMysql = ["John", "Chris", "Ada", "Leon", "Will", "Justin"];
+const Dog = require("../models/dog");
 
-class RepositoryPeople {
-  getAll() {
-    return bankMysql;
+class RepositoryDog {
+  async getAll() {
+    return await Dog.findAll();
   }
-  getOne(index) {
-    return bankMysql[index];
+  async getOne(id) {
+    return await Dog.findByPk(id);
   }
-  add(name) {
-    const index = bankMysql.findIndex((value) => value === name);
-    if (index === -1) {
-      bankMysql.push(name);
-    } else {
-      throw new Error("The user is already registered.");
-    }
+  async add(race, height, weight, description) {
+    return await Dog.create({ race, height, weight, description });
   }
-  update(oldName, newName) {
-    const index = bankMysql.findIndex((value) => value === oldName);
-    if (index !== -1) {
-      bankMysql[index] = newName;
-    } else {
-      throw new Error("Non-existent name.");
-    }
+  async update(id, race, height, weight, description) {
+    const updatedFields = {};
+
+    if (race !== null) updatedFields.race = race;
+    if (height !== null) updatedFields.height = height;
+    if (weight !== null) updatedFields.weight = weight;
+    if (description !== null) updatedFields.description = description;
+
+    return await Dog.update(updatedFields, {
+      where: { id },
+    });
   }
-  delete(index) {
-    bankMysql.splice(index, 1);
+  async delete(id) {
+    return await Dog.destroy({
+      where: { id },
+    });
   }
 }
-module.exports = RepositoryPeople;
+module.exports = RepositoryDog;

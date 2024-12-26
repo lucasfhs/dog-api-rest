@@ -4,20 +4,18 @@ class ServiceDog {
   getAll() {
     return repository.getAll();
   }
-  getOne(index) {
-    return repository.getOne(index);
+  getOne(id) {
+    return repository.getOne(id);
   }
-  update(id, newName) {
-    return repository.update(id, newName);
+  update(id, race, height, weight, description) {
+    return repository.update(id, race, height, weight, description);
   }
-  add(name) {
-    return repository.add(name);
+  add(race, height, weight, description) {
+    return repository.add(race, height, weight, description);
   }
-  getOne(index) {
-    return repository.getOne(index);
-  }
-  delete(index) {
-    return repository.delete(index);
+
+  delete(id) {
+    return repository.delete(id);
   }
 }
 module.exports = ServiceDog;
