@@ -3,42 +3,52 @@ const ServiceDog = require("../services/dog");
 const service = new ServiceDog();
 
 class ControllerDog {
-  getAll(req, res) {
+  async getAll(req, res) {
     try {
-      const names = service.getAll();
+      const names = await service.getAll();
+      if (!names) {
+        throw new Error("Empty database.");
+      }
       res.status(200).json({ names });
     } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-  getOne(req, res) {
-    try {
-      const id = req.params.id;
-      const name = service.getOne(Number(id));
-      res.status(200).json({ name });
-    } catch (error) {
       let statusCode = 500;
-      if (error.mensage === "Dog not found.") {
+      if (error.message === "Empty database") {
         statusCode = 404;
       }
       res.status(statusCode).json({ error: error.message });
     }
   }
-  add(req, res) {
+  async getOne(req, res) {
     try {
-      const body = req.body;
-      service.add(body.name);
+      const id = req.params.id;
+      const name = await service.getOne(Number(id));
+      if (!name) {
+        throw new Error("Dog not found.");
+      }
+      res.status(200).json({ name });
+    } catch (error) {
+      let statusCode = 500;
+      if (error.message === "Dog not found.") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ error: error.message });
+    }
+  }
+  async add(req, res) {
+    try {
+      const { race, height, weight, description } = req.body;
+      await service.add(race, height, weight, description);
       res.status(201).json({ message: "Process completed successfully." });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
-  update(req, res) {
+  async update(req, res) {
     try {
-      const oldName = req.params.id;
-      const newName = req.body.newUser;
-      console.log(newName);
-      service.update(oldName, newName);
+      const id = req.params.id;
+      const { race, height, weight, description } = req.body;
+
+      await service.update(id, race, height, weight, description);
       res.status(200).json({ mensage: "Process completed successfully." });
     } catch (error) {
       let statusCode = 500;
@@ -48,10 +58,10 @@ class ControllerDog {
       res.status(statusCode).json({ error: error.message });
     }
   }
-  delete(req, res) {
+  async delete(req, res) {
     try {
       const index = req.params.id;
-      service.delete(req.params.id);
+      await service.delete(req.params.id);
       res.status(200).json({ mensage: "Process completed successfully." });
     } catch (error) {
       let statusCode = 500;
