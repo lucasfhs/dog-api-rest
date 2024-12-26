@@ -1,0 +1,10 @@
+const express = require("express");
+const ControllerPeople = require("../controllers/dog");
+const router = express.Router();
+const controller = new ControllerPeople();
+router.get("/api/v1/names", controller.getAll);
+router.get("/api/v1/name/:id", controller.getOne);
+router.post("/api/v1/name", controller.add);
+router.put("/api/v1/name/:id", controller.update);
+router.delete("/api/v1/name/:id", controller.delete);
+module.exports = router;
