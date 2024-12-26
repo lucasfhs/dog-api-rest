@@ -4,6 +4,9 @@ class ServiceUser {
   register(data) {
     return repository.register(data);
   }
+  get(id) {
+    return repository.get(id);
+  }
   //   auth(index) {
   //     return repository.auth(index);
   //   }
